@@ -13,7 +13,6 @@ const UserSchema = mongoose.Schema({
         type: String,
         default: 'member',
     },
-    posts: [],
     created: {
         type: Date,
         required: true,
