@@ -9,6 +9,10 @@ const TokenSchema = mongoose.Schema({
         type: String,
         required: true,
     },
+    expires: {
+        type: Date,
+        default: 'Never Expires',
+    },
     created: {
         type: Date,
         required: true,
