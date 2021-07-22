@@ -18,11 +18,23 @@ function Login(props) {
     });
     const history = useHistory();
 
+    // If token cookie already exists, delete token and cookie
     useEffect(() => {
         if (Cookies.get('token')) {
-            Cookies.delete('token');
+            async function logout() {
+                await axios
+                    .delete('/auth/delete-token', {
+                        token: Cookies.get('token'),
+                    })
+                    .catch((e) => {
+                        console.log(e);
+                    });
+            }
+            Cookies.remove('token');
+            logout();
+            history.push('login');
         }
-    }, []);
+    }, [history]);
 
     function handleChange(e) {
         const name = e.target.name;
