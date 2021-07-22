@@ -5,6 +5,7 @@ import { Paper, TextField, Button, Typography } from '@material-ui/core';
 
 function Register(props) {
     const [form, setForm] = useState({
+        username: '',
         fullName: '',
         email: '',
         phoneNumber: '',
@@ -35,6 +36,16 @@ function Register(props) {
         <Paper>
             <form onSubmit={handleSubmit}>
                 <Typography variant='h3'>Create an Account</Typography>
+                <TextField
+                    required
+                    fullWidth
+                    label='Username'
+                    name='username'
+                    variant='outlined'
+                    onChange={handleChange}
+                    value={form.username}
+                    autoFocus
+                />
                 <TextField
                     required
                     fullWidth
