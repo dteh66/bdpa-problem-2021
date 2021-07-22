@@ -58,8 +58,8 @@ function Login(props) {
         await axios
             .post('/auth/generate-token/', form)
             .then((response) => {
-                Cookies.set('token', response.token, {
-                    expires: response.expires,
+                Cookies.set('token', response.data.token, {
+                    expires: response.data.expires,
                 });
                 console.log(response);
             })
