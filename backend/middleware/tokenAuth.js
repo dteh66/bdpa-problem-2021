@@ -16,7 +16,7 @@ async function tokenAuth(req, res, next) {
 
     // Check whether token is expired or if there was no result
     if (!result || (result.expired !== null && new Date() < result.expired)) {
-        await Tokens.deleteMany({ login });
+        await Tokens.deleteMany({ username });
         res.status(511);
         next(new Error('Session Expired'));
         return;
