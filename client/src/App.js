@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Home from './components/Home';
 import Register from './components/Register';
 import Login from './components/Login';
+import Bookmarks from './components/Bookmarks'
 
 function App() {
     return (
@@ -18,7 +19,9 @@ function App() {
                     <Register />
                 </Route>
                 <Route path='/pack'>{/* <Pack /> */}</Route>
-                <Route path='/bookmarks'>{/* <Bookmarks /> */}</Route>
+                <Route path='/bookmarks'>
+                    <Bookmarks />
+                </Route>
                 <Route path='/saved'>{/* <Saved /> */}</Route>
                 <Route path='/recover-password'>{/* <Recovery /> */}</Route>
             </Switch>
