@@ -2,8 +2,8 @@ const Tokens = require('../../models/Token');
 
 async function DeleteToken(req, res, next) {
     try {
-        const username = req.username;
-        result = await Tokens.deleteMany({ username });
+        const user = req.user;
+        result = await Tokens.deleteMany({ username: user.username });
     } catch (error) {
         console.log(error);
         res.status(500).send('Whoops, something went wrong!');

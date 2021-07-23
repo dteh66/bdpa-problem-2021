@@ -4,10 +4,12 @@ const Users = require('../../models/User');
 async function CreateUser(req, res, next) {
     const body = req.body;
 
-    // Find existing users with the same username, if any, break
-    const existingUsers = await Users.find({ username: req.body.username });
+    // Find existing users with the same username or email, if any, break
+    const existingUsers = await Users.find({
+        $or: [{ username: req.body.username }, { email: req.body.email }],
+    });
     if (existingUsers.length !== 0) {
-        next(new Error('A user with that name already exists'));
+        next(new Error('A user with that username or email already exists'));
         return;
     }
 
