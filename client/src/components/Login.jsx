@@ -57,7 +57,7 @@ function Login(props) {
             .post('/auth/generate-token/', form)
             .then((response) => {
                 Cookies.set('token', response.data.token, {
-                    expires: response.data.expires,
+                    expires: form.remember ? null : 1 / 24,
                 });
                 console.log(response);
             })
