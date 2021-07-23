@@ -23,15 +23,13 @@ function Login(props) {
         if (Cookies.get('token')) {
             async function logout() {
                 await axios
-                    .delete('/auth/delete-token', {
-                        token: Cookies.get('token'),
-                    })
+                    .delete(`/auth/delete-token?token=${Cookies.get('token')}`)
                     .catch((e) => {
                         console.log(e);
                     });
             }
-            Cookies.remove('token');
             logout();
+            Cookies.remove('token');
             history.push('login');
         }
     }, [history]);
