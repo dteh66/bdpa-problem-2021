@@ -16,6 +16,7 @@ function Login(props) {
         password: '',
         remember: false,
     });
+    const [error, setError] = useState('');
     const history = useHistory();
 
     // If token cookie already exists, delete token and cookie
@@ -30,13 +31,11 @@ function Login(props) {
             }
             logout();
             Cookies.remove('token');
-            history.push('login');
         }
     }, [history]);
 
     function handleChange(e) {
         const name = e.target.name;
-        console.log(e);
         const value = e.target.value;
         setForm(() => {
             return { ...form, [name]: value };
@@ -53,17 +52,18 @@ function Login(props) {
 
     async function handleSubmit(e) {
         e.preventDefault();
+        setError(() => '');
         await axios
             .post('/auth/generate-token/', form)
             .then((response) => {
                 Cookies.set('token', response.data.token, {
                     expires: form.remember ? null : 1 / 24,
                 });
-                console.log(response);
+                history.push('/');
             })
-            .catch((error) => console.log(error));
-
-        history.push('/');
+            .catch((error) => {
+                setError(() => error.response.data);
+            });
     }
 
     return (
@@ -104,6 +104,11 @@ function Login(props) {
                         value={form.remember}
                     />
                 </div>
+                {error && (
+                    <Typography variant='body2' color='secondary'>
+                        {error}
+                    </Typography>
+                )}
                 <div
                     style={{
                         display: 'flex',

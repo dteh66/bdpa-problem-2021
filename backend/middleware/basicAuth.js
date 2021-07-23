@@ -8,7 +8,9 @@ async function basicAuth(req, res, next) {
 
         // Check that the username and password exists before spending time creating a hash
         if (!login || !password) {
-            next(new Error('Unauthorized User'));
+            res.status(400).send(
+                'We did not recieve the required data, please check your information and try again.'
+            );
             return;
         }
         const passwordHash = await sha512(req.body.password);
@@ -18,8 +20,10 @@ async function basicAuth(req, res, next) {
         });
 
         // Checking if there is a result from the login query
-        if (result.length === 0) {
-            next(new Error('Unauthorized User'));
+        if (!result) {
+            res.status(400).send(
+                'Are you sure you have an account? Usernames might be case-sensitive.'
+            );
             return;
         }
 
@@ -30,14 +34,15 @@ async function basicAuth(req, res, next) {
             next();
             return;
         } else {
-            next(new Error('Unauthorized User'));
+            res.status(400).send(
+                'Your request did not succeed, check your information and try again.'
+            );
             return;
         }
     } catch (e) {
         console.log(e);
 
-        const err = new Error('You are missing something');
-        next(err);
+        res.status(400).send('You are missing something');
     }
 }
 

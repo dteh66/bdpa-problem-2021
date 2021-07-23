@@ -13,6 +13,7 @@ function Register(props) {
         confirmPassword: '',
         captcha: '',
     });
+    const [error, setError] = useState('');
     const history = useHistory();
 
     function handleChange(e) {
@@ -25,17 +26,22 @@ function Register(props) {
 
     async function handleSubmit(e) {
         e.preventDefault();
+        setError(() => '');
         await axios
             .post('/auth/create-user/', form)
-            .catch((error) => console.log(error));
-
-        history.push('/login');
+            .then((response) => {
+                history.push('/login');
+            })
+            .catch((error) => {
+                setError(() => error.response.data);
+            });
     }
 
     return (
         <Paper>
             <form onSubmit={handleSubmit}>
                 <Typography variant='h3'>Create an Account</Typography>
+
                 <TextField
                     required
                     fullWidth
@@ -104,6 +110,11 @@ function Register(props) {
                     onChange={handleChange}
                     value={form.captcha}
                 />
+                {error && (
+                    <Typography variant='body2' color='secondary'>
+                        {error}
+                    </Typography>
+                )}
                 <div
                     style={{
                         display: 'flex',

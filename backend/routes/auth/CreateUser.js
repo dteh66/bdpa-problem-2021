@@ -9,7 +9,9 @@ async function CreateUser(req, res, next) {
         $or: [{ username: req.body.username }, { email: req.body.email }],
     });
     if (existingUsers.length !== 0) {
-        next(new Error('A user with that username or email already exists'));
+        res.status(409).send(
+            'A user with that username or email already exists'
+        );
         return;
     }
 
@@ -18,7 +20,6 @@ async function CreateUser(req, res, next) {
         const result = await Users.create({ ...body, password: passwordHash });
 
         res.send(result);
-        next();
     } catch (e) {
         console.log(e);
 
