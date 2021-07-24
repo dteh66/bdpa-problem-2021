@@ -23,6 +23,21 @@ const UserSchema = mongoose.Schema({
         type: String,
         required: true,
     },
+    followedUsers: {
+        type: Array,
+        required: true,
+        default: [],
+    },
+    bookmarked: {
+        type: Array,
+        required: true,
+        default: [],
+    },
+    liked: {
+        type: Array,
+        required: true,
+        default: [],
+    },
     created: {
         type: Date,
         required: true,
