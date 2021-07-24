@@ -28,6 +28,11 @@ const UserSchema = mongoose.Schema({
         required: true,
         default: [],
     },
+    pack: {
+        type: Array,
+        required: true,
+        default: [],
+    },
     bookmarked: {
         type: Array,
         required: true,
