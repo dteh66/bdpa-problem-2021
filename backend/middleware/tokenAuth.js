@@ -12,16 +12,16 @@ async function tokenAuth(req, res, next) {
 
     // Find token, then get username from result
     const result = await Tokens.findOne({ token });
-    const username = result ? result.username : null;
+    const userId = result ? result.user : null;
 
     // Check whether token is expired or if there was no result
     if (!result || (result.expired !== null && new Date() < result.expired)) {
-        await Tokens.deleteMany({ username });
+        await Tokens.deleteMany({ user: userId });
         res.status(511).send('Session Expired');
         return;
     }
 
-    const user = await Users.findOne({ username });
+    const user = await Users.findById(userId);
 
     // Connect user to request for use in other routes
     req.user = user;
