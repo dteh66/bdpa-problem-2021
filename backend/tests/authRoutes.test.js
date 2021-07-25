@@ -139,8 +139,6 @@ describe('Test Routes for authRouter', function () {
             password: hashedPassword,
         });
         const resetRequest = await ResetRequest.create({ user: user.id });
-        console.log(user.id);
-        console.log(resetRequest.id);
 
         const newPassword = 'password123';
         await supertest(app)
@@ -149,7 +147,9 @@ describe('Test Routes for authRouter', function () {
             .expect(200)
             .then(async (response) => {
                 const dbUser = await Users.findById(user.id);
-
+                const resetRequest = await ResetRequest.findOne({
+                    user: dbUser.id,
+                });
                 // Makes sure that the user's password was actually changed
                 const newHashedPassword = await sha512(newPassword);
                 expect(dbUser).toEqual(
@@ -157,6 +157,7 @@ describe('Test Routes for authRouter', function () {
                         password: newHashedPassword,
                     })
                 );
+                expect(resetRequest).toEqual(null);
             });
     });
 
