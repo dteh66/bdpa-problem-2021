@@ -10,15 +10,14 @@ async function GenerateToken(req, res, next) {
     const expires = remember ? null : Date.now() + 3600000;
 
     // Delete previous/timed-out tokens and create a new one for that username
-    await Tokens.deleteMany({ username: user.username });
+    await Tokens.deleteMany({ login: user.id });
 
     try {
         const result = await Tokens.create({
-            username: user.username,
+            user: user.id,
             token,
             expires,
         });
-
         res.send({
             token: result.token,
             expires: result.expires,
