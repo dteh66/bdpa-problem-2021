@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-var supertest = require('supertest');
+const supertest = require('supertest');
 const { sha512 } = require('crypto-hash');
 const { v4: uuidv4 } = require('uuid');
 require('dotenv').config();
@@ -10,38 +10,34 @@ const Tokens = require('../models/Token');
 const ResetRequest = require('../models/ResetRequest');
 
 describe('Test Routes for authRouter', function () {
-    beforeEach((done) => {
-        mongoose.connect(
-            process.env.TEST_CONNECTION_STRING,
-            { useUnifiedTopology: true, useNewUrlParser: true },
-            done
-        );
+    beforeEach(async () => {
+        await mongoose.connect(process.env.TEST_CONNECTION_STRING, {
+            useUnifiedTopology: true,
+            useNewUrlParser: true,
+            useFindAndModify: false,
+        });
     });
 
     test('POST /auth/create-user', async () => {
+        const password = 'password';
+        const hashedPassword = await sha512(password);
         const user = {
             username: 'testuser',
             fullName: 'Test User',
             email: 'test.user@test.com',
             phoneNumber: '000-000-0000',
-            password: 'password',
+            password: hashedPassword,
         };
-        const hashedPassword = await sha512(user.password);
 
         await supertest(app)
             .post('/auth/create-user')
-            .send(user)
+            .send({ ...user, password: password })
             .expect(200)
             .set('Accept', 'application/json')
             .expect('Content-Type', /json/)
             .then((response) => {
                 // Makes sure that route returns all of the user information
-                expect(response.body).toEqual(
-                    expect.objectContaining({
-                        ...user,
-                        password: hashedPassword,
-                    })
-                );
+                expect(response.body).toEqual(expect.objectContaining(user));
             });
     });
 
@@ -161,9 +157,8 @@ describe('Test Routes for authRouter', function () {
             });
     });
 
-    afterEach((done) => {
-        mongoose.connection.db.dropDatabase(() => {
-            mongoose.connection.close(done);
-        });
+    afterEach(async () => {
+        await mongoose.connection.db.dropDatabase();
+        await mongoose.connection.close();
     });
 });
