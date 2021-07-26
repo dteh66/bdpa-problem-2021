@@ -3,8 +3,11 @@ var router = express.Router();
 
 const tokenAuth = require('../middleware/tokenAuth');
 
-// Import index routes
-// const ExampleRoute = require('./index/ExampleRoute')
-// router.method('<path>', ExampleRoute) -- Add tokenAuth middleware if not home page
+const GetBarks = require('./index/GetBarks');
+
+router.get('/', GetBarks);
+// router.get('/:id', () => {});
+// router.post('/create', tokenAuth, () => {});
+// router.delete('/:id/delete', tokenAuth, () => {});
 
 module.exports = router;
