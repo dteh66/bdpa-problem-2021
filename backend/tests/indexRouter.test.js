@@ -71,7 +71,13 @@ describe('Test Routes for indexRouter', function () {
             .set('Accept', 'application/json')
             .expect('Content-Type', /json/)
             .then((response) => {
-                expect(response.body).toEqual(expect.ObjectContaining(bark));
+                expect(response.body).toEqual(
+                    expect.objectContaining({
+                        _id: expect.any(String),
+                        author: user.username,
+                        content: 'Bark 1',
+                    })
+                );
             });
     });
 
@@ -93,7 +99,6 @@ describe('Test Routes for indexRouter', function () {
         await supertest(app)
             .post('/barks/create')
             .send({
-                author: user.username,
                 content: 'Bark 1',
                 token: token.token,
             })
@@ -101,7 +106,7 @@ describe('Test Routes for indexRouter', function () {
             .then(async (response) => {
                 const bark = await Barks.findOne({ author: user.username });
                 expect(bark).toEqual(
-                    expect.ObjectContaining({
+                    expect.objectContaining({
                         author: user.username,
                         content: 'Bark 1',
                     })
@@ -132,7 +137,9 @@ describe('Test Routes for indexRouter', function () {
             .expect(200)
             .then(async (response) => {
                 const dbBark = await Barks.findById(bark.id);
-                expect(dbBark).toEqual(ObjectContaining(bark));
+                expect(dbBark).toEqual(
+                    expect.objectContaining({ deleted: true })
+                );
             });
     });
 
