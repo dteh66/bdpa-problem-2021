@@ -4,10 +4,13 @@ var router = express.Router();
 const tokenAuth = require('../middleware/tokenAuth');
 
 const GetBarks = require('./index/GetBarks');
+const GetOneBark = require('./index/GetOneBark');
+const CreateBark = require('./index/CreateBark');
+const DeleteBark = require('./index/DeleteBark');
 
 router.get('/', GetBarks);
-// router.get('/:id', () => {});
-// router.post('/create', tokenAuth, () => {});
-// router.delete('/:id/delete', tokenAuth, () => {});
+router.get('/:id', GetOneBark);
+router.post('/create', tokenAuth, CreateBark);
+router.delete('/:id/delete', tokenAuth, DeleteBark);
 
 module.exports = router;
