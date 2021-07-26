@@ -7,9 +7,9 @@ const BarksSchema = mongoose.Schema({
     liked: { type: Number, required: true, default: 0 },
     barkBacks: { type: Number, required: true, default: 0 },
     rebarks: { type: Number, required: true, default: 0 },
-    barkBackTo: { type: String, required: true, default: false },
-    rebarkOf: { type: Array, required: true, default: [] },
+    barkBackTo: { type: String, default: null },
+    rebarkOf: { type: String, default: null },
     created: { type: Date, required: true, default: Date.now },
 });
 
-module.exports = mongoose.Model('Barks', BarksSchema);
+module.exports = mongoose.model('Barks', BarksSchema);
