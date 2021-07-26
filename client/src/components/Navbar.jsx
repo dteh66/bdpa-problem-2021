@@ -46,6 +46,9 @@ export default function Navbar() {
             <MenuItem onClick={handleClose}>
               <Link to="/home">Home</Link>
             </MenuItem>
+            <MenuItem onClick={handleClose}>
+              <Link to="/home">Layout</Link>
+            </MenuItem>
           </Menu>
         </div>
         <Typography variant="h6" className={classes.title}>Navigate</Typography>

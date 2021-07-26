@@ -20,6 +20,6 @@ export default function Home(props) {
 */
 
   return (
-    <Navbar />
+    <p> hi </p>
   );
 }
