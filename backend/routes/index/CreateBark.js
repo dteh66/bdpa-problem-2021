@@ -5,15 +5,14 @@ async function CreateBark(req, res, next) {
         const username = req.user.username;
         const content = req.body.content;
         if (!username || !content) {
-            res.status(400).send('Required fields not supplied.');
-            return;
+            return res.status(400).send('Required fields not supplied.');
         }
 
         const bark = await Barks.create({ author: username, content });
-        res.status(200).send(bark);
+        return res.status(200).send(bark);
     } catch (error) {
         console.log(error);
-        res.status(500).send('Whoops, something went wrong.');
+        return res.status(500).send('Whoops, something went wrong.');
     }
 }
 

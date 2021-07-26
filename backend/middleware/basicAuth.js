@@ -8,10 +8,11 @@ async function basicAuth(req, res, next) {
 
         // Check that the username and password exists before spending time creating a hash
         if (!login || !password) {
-            res.status(400).send(
-                'We did not recieve the required data, please check your information and try again.'
-            );
-            return;
+            return res
+                .status(400)
+                .send(
+                    'We did not recieve the required data, please check your information and try again.'
+                );
         }
         const passwordHash = await sha512(req.body.password);
 
@@ -21,28 +22,28 @@ async function basicAuth(req, res, next) {
 
         // Checking if there is a result from the login query
         if (!result) {
-            res.status(400).send(
-                'Are you sure you have an account? Usernames might be case-sensitive.'
-            );
-            return;
+            return res
+                .status(400)
+                .send(
+                    'Are you sure you have an account? Usernames might be case-sensitive.'
+                );
         }
 
         // Checking if submitted password is the same
         if (passwordHash === result.password) {
             // Connect user to request for use in other routes
             req.user = result;
-            next();
-            return;
+            return next();
         } else {
-            res.status(400).send(
-                'Your request did not succeed, check your information and try again.'
-            );
-            return;
+            return res
+                .status(400)
+                .send(
+                    'Your request did not succeed, check your information and try again.'
+                );
         }
     } catch (e) {
         console.log(e);
-
-        res.status(400).send('You are missing something');
+        return res.status(500).send('Whoops, something went wrong!');
     }
 }
 

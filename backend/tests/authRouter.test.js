@@ -75,8 +75,7 @@ describe('Test Routes for authRouter', function () {
     });
 
     test('DELETE /auth/delete-token', async () => {
-        const password = 'password';
-        const hashedPassword = await sha512(password);
+        const hashedPassword = await sha512('password');
         const user = await Users.create({
             username: 'testuser',
             fullName: 'Test User',
@@ -137,6 +136,7 @@ describe('Test Routes for authRouter', function () {
         const resetRequest = await ResetRequest.create({ user: user.id });
 
         const newPassword = 'password123';
+        const newHashedPassword = await sha512(newPassword);
         await supertest(app)
             .patch(`/auth/reset-password/${resetRequest.id}`)
             .send({ password: newPassword })
@@ -147,7 +147,6 @@ describe('Test Routes for authRouter', function () {
                     user: dbUser.id,
                 });
                 // Makes sure that the user's password was actually changed
-                const newHashedPassword = await sha512(newPassword);
                 expect(dbUser).toEqual(
                     expect.objectContaining({
                         password: newHashedPassword,
