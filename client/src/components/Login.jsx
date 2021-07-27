@@ -18,6 +18,7 @@ function Login(props) {
     });
     const [error, setError] = useState('');
     const history = useHistory();
+    const API_URL = process.env.REACT_APP_APIURL
 
     // If token cookie already exists, delete token and cookie
     useEffect(() => {
@@ -54,7 +55,7 @@ function Login(props) {
         e.preventDefault();
         setError(() => '');
         await axios
-            .post('/auth/generate-token/', form)
+            .post(API_URL + '/auth/generate-token/', form)
             .then((response) => {
                 Cookies.set('token', response.data.token, {
                     expires: form.remember ? null : 1 / 24,
@@ -62,7 +63,8 @@ function Login(props) {
                 history.push('/');
             })
             .catch((error) => {
-                setError(() => error.response.data);
+                console.log(error)
+                //setError(() => error.response.data);
             });
     }
 
