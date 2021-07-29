@@ -4,6 +4,7 @@ import Navbar from "./Navbar"
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { Grid } from '@material-ui/core';
+import { DataGrid } from '@material-ui/data-grid';
 import { Pagination } from '@material-ui/lab';
 import { getPosts } from './barkFetch';
 import { Link } from "react-router-dom"
@@ -29,11 +30,15 @@ export default function Home({ token }) {
 
   const [renderedPosts, setRenderedPosts] = useState([]);
   const itemLimit = 10;
-
+  const columns = ["id", "title", "body"];
   useEffect(() => {
     const updatePosts = async () => {
       // setPosts(await getPosts('http://localhost:3001/api', token))
-      setPosts([{ _id: 'a12', title: 'asdf', body: 'body' }])
+      setPosts([{ id: 'a12', title: 'asdf', body: 'body' }, 
+                { id: 'a13', title: 'asdf2', body: 'body2' },
+                { id: 'a14', title: 'asdf3', body: 'body3' },
+                { id: 'a15', title: 'asdf4', body: 'body4' }
+              ])
     }
     updatePosts()
   }, []);
@@ -55,4 +60,12 @@ export default function Home({ token }) {
       </Grid>
     </>
   );
+  /* possibly use for suggesting followers
+  <DataGrid
+        rows={renderedPosts}
+        columns={columns}
+        pageSize={5}
+        disableSelectionOnClick
+  />
+  */
 }

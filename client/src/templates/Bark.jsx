@@ -13,6 +13,16 @@ function Bark({ object, children }) {
     return (
         <Paper style={postStyle}>
             <div style={{ display: 'flex', alignItems: 'center' }}>
+                <h1>{title}</h1>
+                {children}
+            </div>
+            <p>{body}</p>
+        </Paper>
+    );
+    /*
+  return (
+        <Paper style={postStyle}>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
                 <Link to={`/${_id}`} style={linkStyle}>
                     <h1>{title}</h1>
                 </Link>
@@ -21,6 +31,7 @@ function Bark({ object, children }) {
             <p>{body}</p>
         </Paper>
     );
+    */
 }
 
 export default Bark;
