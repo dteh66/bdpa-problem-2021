@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Home from './components/Home';
 import Register from './components/Register';
@@ -6,16 +7,15 @@ import Bookmarks from './components/Bookmarks'
 import Navbar from './components/Navbar'
 
 function App() {
+    const [token, setToken] = useState('');
+
     return (
         <Router>
-            {/* <Topbar /> or layout element of some kind */}
-            <Navbar />
+            <Navbar setToken={setToken} token={token} />
+
             <Switch>
-                <Route path='/' exact>
-                    <Home />
-                </Route>
                 <Route path='/login'>
-                    <Login />
+                    <Login setToken={setToken} />
                 </Route>
                 <Route path='/register'>
                     <Register />
@@ -26,6 +26,9 @@ function App() {
                 </Route>
                 <Route path='/saved'>{/* <Saved /> */}</Route>
                 <Route path='/recover-password'>{/* <Recovery /> */}</Route>
+                <Route path='/'>
+                    <Home token={token} />
+                </Route>
             </Switch>
         </Router>
     );
