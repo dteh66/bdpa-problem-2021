@@ -15,6 +15,7 @@ function Register(props) {
     });
     const [error, setError] = useState('');
     const history = useHistory();
+    const API_URL = process.env.REACT_APP_APIURL
 
     function handleChange(e) {
         const name = e.target.name;
@@ -28,12 +29,20 @@ function Register(props) {
         e.preventDefault();
         setError(() => '');
         await axios
-            .post('/auth/create-user/', form)
+            //.post('/auth/create-user/', form)
+            .post(API_URL + '/auth/create-user/', form)
             .then((response) => {
                 history.push('/login');
             })
             .catch((error) => {
-                setError(() => error.response.data);
+                console.log(error)
+                 //if err.message.equals(";dfh")
+                //error.message
+                // if (error.status === 409) { console.log("Email taken") }
+                // else console.log("Bad credentials")
+                // setError(() => error.response.data);
+
+                setError(error.message || "There was an error registering this account")
             });
     }
 
