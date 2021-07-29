@@ -4,8 +4,10 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cors = require('cors');
+const morgan = require('morgan');
 
-var authRouter = require('./routes/authRouter');
+const authRouter = require('./routes/authRouter');
+const indexRouter = require('./routes/indexRouter');
 
 var app = express();
 
@@ -16,12 +18,16 @@ app.set('view engine', 'jade');
 app.use(cors())
 
 app.use(logger('dev'));
+// HTTP Request logger
+// app.use(morgan('dev'));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/auth', authRouter);
+app.use('/barks', indexRouter);
 
 // error handler
 app.use(function (err, req, res, next) {
