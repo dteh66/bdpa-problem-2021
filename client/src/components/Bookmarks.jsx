@@ -1,18 +1,20 @@
-import { makeStyles, Typography } from '@material-ui/core'
+import { makeStyles, Typography } from '@material-ui/core';
 
 const useStyles = makeStyles({
     heading: {
         fontSize: '30px',
-        margin: 'auto'
-    }
-})
+        margin: 'auto',
+    },
+});
 
 const Bookmark = () => {
-    const classes = useStyles()
+    const classes = useStyles();
 
     return (
-        <Typography className={classes.heading}>Your Bookmarked Barks</Typography>
-    )
-}
+        <Typography className={classes.heading}>
+            Your Bookmarked Barks
+        </Typography>
+    );
+};
 
-export default Bookmark
+export default Bookmark;

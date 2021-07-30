@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Home from './components/Home';
 import Register from './components/Register';
 import Login from './components/Login';
-import Bookmarks from './components/Bookmarks'
+import Bookmarks from './components/Bookmarks';
 
 function App() {
     return (
