@@ -21,9 +21,11 @@ async function GetBarks(req, res, next) {
 
             const barks = await Barks.find({
                 author: { $in: user.followedUsers },
+                deleted: false,
             });
             const unfollowedBarks = await Barks.find({
                 author: { $not: { $in: user.followedUsers } },
+                deleted: false,
             });
             return res.status(200).send({ barks, unfollowedBarks });
         } else {
