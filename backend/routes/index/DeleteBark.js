@@ -1,7 +1,6 @@
 const Barks = require('../../models/Bark');
 
 async function DeleteBark(req, res, next) {
-    console.log('hello');
     const user = req.user;
     const bark = await Barks.findById(req.params.id);
     if (!bark) {

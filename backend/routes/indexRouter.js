@@ -8,9 +8,7 @@ const GetOneBark = require('./index/GetOneBark');
 const CreateBark = require('./index/CreateBark');
 const DeleteBark = require('./index/DeleteBark');
 
-router.get('/', (req, res, next) => {
-    res.status(404).send();
-});
+router.get('/', GetBarks);
 router.get('/:id', GetOneBark);
 router.post('/create', tokenAuth, CreateBark);
 router.delete('/:id/delete', tokenAuth, DeleteBark);

@@ -21,9 +21,9 @@ describe('Test Routes for indexRouter', function () {
     test('GET /barks', async () => {
         const hashedPassword = await sha512('password');
         const user = await Users.create({
-            username: 'testuser',
+            username: 'getbarkstest',
             fullName: 'Test User',
-            email: 'test.user@test.com',
+            email: 'get.barks@test.com',
             phoneNumber: '000-000-0000',
             password: hashedPassword,
         });
@@ -42,10 +42,17 @@ describe('Test Routes for indexRouter', function () {
             .set('Accept', 'application/json')
             .expect('Content-Type', /json/)
             .then((response) => {
+                console.log(bark1._doc);
                 expect(response.body).toEqual(
-                    expect.ArrayContaining([
-                        expect.ObjectContaining(bark1),
-                        expect.ObjectContaining(bark2),
+                    expect.arrayContaining([
+                        expect.objectContaining({
+                            author: bark1.author,
+                            content: bark1.content,
+                        }),
+                        expect.objectContaining({
+                            author: bark2.author,
+                            content: bark2.content,
+                        }),
                     ])
                 );
             });
@@ -56,7 +63,7 @@ describe('Test Routes for indexRouter', function () {
         const user = await Users.create({
             username: 'testuser',
             fullName: 'Test User',
-            email: 'test.user@test.com',
+            email: 'get.bark@bark.com',
             phoneNumber: '000-000-0000',
             password: hashedPassword,
         });
